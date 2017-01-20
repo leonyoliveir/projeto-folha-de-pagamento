@@ -3,7 +3,7 @@ Projeto para a criação de um sistema de folha de pagamento de empregados de um
 
 Funções que o sistema deve ter:
 
-1. Adição de um empregado
+1. Adição de um empregado ✓
 2. Remoção de um empregado
 3. Lançar um cartão de ponto
 4. Lançar um resultado venda
