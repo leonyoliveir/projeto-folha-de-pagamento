@@ -54,35 +54,39 @@ public class FolhadePagamento {
 		System.out.println("Método de pagamento escolhido: " + empregado.metodo);
 	}
 
-	public static Empregado adicionar(Scanner entrada, int indice) throws Exception { // Adiciona um novo empregado ao sistema
-		Empregado empregado = new Empregado();
+	public static void adicionar(Scanner entrada, Empregado[] empregados) throws Exception { // Adiciona um novo empregado ao sistema
+		
+		int atual = 0;
+		while (empregados[atual] != null) {
+			atual++;
+		}
+		empregados[atual] = new Empregado();
 		System.out.println("\nPor favor, digite o nome do empregado a ser cadastrado:");
-		empregado = new Empregado();
-		empregado.nome = entrada.nextLine();
+		empregados[atual].nome = entrada.nextLine();
 		System.out.println("\nPor favor, digite o endereço do empregado:");
-		empregado.endereco = entrada.nextLine();
+		empregados[atual].endereco = entrada.nextLine();
 		System.out.println("\nPor favor, escolha o tipo de pagamento do empregado:");
 		System.out.println("\nH - Horista");
 		System.out.println("A - Assalariado");
 		System.out.println("C - Comissionado");
-		empregado.tipo = (char) System.in.read();
+		empregados[atual].tipo = (char) System.in.read();
 		System.out.println("\nPor favor, digite o salário a ser pago ao empregado:");
-		if (empregado.tipo == 'H') {
-			empregado.salarioHora = entrada.nextDouble();
+		if (empregados[atual].tipo == 'H') {
+			empregados[atual].salarioHora = entrada.nextDouble();
 		} else {
-			empregado.salarioFixo = entrada.nextDouble();
-			if (empregado.tipo == 'C') {
+			empregados[atual].salarioFixo = entrada.nextDouble();
+			if (empregados[atual].tipo == 'C') {
 				System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
-				empregado.percentual = entrada.nextDouble();
+				empregados[atual].percentual = entrada.nextDouble();
 			}
 		}
 		System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
 		System.out.println("Opções: Correios, Depósito, Pessoalmente");
 		String lixo = entrada.nextLine();
-		empregado.metodo = entrada.nextLine();
-		empregado.numeroCadastro = indice + 1;
+		empregados[atual].metodo = entrada.nextLine();
+		empregados[atual].numeroCadastro = atual + 1;
+		cadastrado(empregados[atual]);
 
-		return empregado;
 	}
 
 	public static void remover(Scanner entrada, Empregado[] empregados){ // Remove um empregado do sistema
@@ -103,6 +107,39 @@ public class FolhadePagamento {
 	}
 	
 	
+	public static void ponto(Scanner entrada, Empregado[] empregados){ // Lança o cartão de ponto a um empregado
+		System.out.println("Digite o número de cadastro do empregado:");
+		int cadastro = entrada.nextInt() - 1;
+		if (empregados[cadastro] == null) {
+			System.out.println("Empregado não cadastrado!");
+		} else if (empregados[cadastro].tipo == 'H') {
+			System.out.println("Digite o número de horas:");
+			double horas = entrada.nextDouble();
+			if (horas <= 8) {
+				empregados[cadastro].salario += horas * empregados[cadastro].salarioHora;
+			}
+			System.out.println("Cartão de ponto lançado com sucesso!");
+		} else {
+			System.out.println("Empregado não é horista!");
+		}
+	}
+	
+	public static void venda(Scanner entrada, Empregado[] empregados){
+		
+		System.out.println("Digite o número de cadastro do empregado:");
+		int cadastro = entrada.nextInt() - 1;
+		if(empregados[cadastro] == null){
+			System.out.println("Empregado não cadastrado!");
+		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
+			System.out.println("Digite o resultado da venda:");
+			empregados[cadastro].salario += entrada.nextDouble() * empregados[cadastro].percentual;
+			System.out.println("Resultado lançado com sucesso!");
+		} else {
+			System.out.println("Empregado não é comissionado!");
+		}
+		
+	}
+	
 	public static void main(String[] args) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
@@ -118,11 +155,7 @@ public class FolhadePagamento {
 		
 		case 1:
 
-			while (empregados[atual] != null) {
-				atual++;
-			}
-			empregados[atual] = adicionar(entrada, atual);
-			cadastrado(empregados[atual]);
+			adicionar(entrada, empregados);
 			break;
 
 		case 2:
@@ -132,35 +165,14 @@ public class FolhadePagamento {
 			
 		case 3:
 			
-			System.out.println("Digite o número de cadastro do empregado:");
-			cadastro = entrada.nextInt() - 1;
-			if (empregados[cadastro] == null) {
-				System.out.println("Empregado não cadastrado!");
-			} else if (empregados[cadastro].tipo == 'H') {
-				System.out.println("Digite o número de horas:");
-				double horas = entrada.nextDouble();
-				if (horas <= 8) {
-					empregados[cadastro].salario += horas * empregados[cadastro].salarioHora;
-				}
-				System.out.println("Cartão de ponto lançado com sucesso!");
-			} else {
-				System.out.println("Empregado não é horista!");
-			}
-			
+			ponto(entrada, empregados);
 			break;
+			
 		case 4:
 			
-			System.out.println("Digite o número de cadastro do empregado:");
-			cadastro = entrada.nextInt() - 1;
-			if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
-				System.out.println("Digite o resultado da venda:");
-				empregados[cadastro].salario += entrada.nextDouble() * empregados[cadastro].percentual;
-				System.out.println("Resultado lançado com sucesso!");
-			} else {
-				System.out.println("Empregado não é comissionado!");
-			}
-			
+			venda(entrada, empregados);
 			break;
+			
 		case 5:
 
 			break;
