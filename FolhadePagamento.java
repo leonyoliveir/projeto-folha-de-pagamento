@@ -5,7 +5,7 @@ public class FolhadePagamento {
 	public static void main(String[] args) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
-		int opcao, atual = 1, cadastro;
+		int opcao, cadastro;
 		Empregado[] empregados = new Empregado[20];
 
 		empregados[0] = new Empregado();
@@ -13,9 +13,13 @@ public class FolhadePagamento {
 		empregados[0].endereco = "Avenida Dourada, 77";
 		empregados[0].horas = 0;
 		empregados[0].comissao = 0;
-		empregados[0].salarioMes = 800.00;
-		empregados[0].tipoPagamento = 'C';
+		empregados[0].metodo = "Correios";
+		empregados[0].percentual = 0;
+		empregados[0].salarioFixo = 800.00;
+		empregados[0].salarioHora = 0;
+		empregados[0].tipoPagamento = 'A';
 		empregados[0].numeroCadastro = 1;
+
 		do {
 			System.out.println("Bem-vindo ao sistema de cadastros de funcionários!");
 			System.out.println("\nPor favor, escolha uma opção para iniciar:");
@@ -33,11 +37,15 @@ public class FolhadePagamento {
 
 			opcao = entrada.nextInt();
 			String lixo = entrada.nextLine();
+			int atual = 0;
 
 			switch (opcao) {
 			case 0:
 				break;
 			case 1:
+				while(empregados[atual] != null){
+					atual++;
+				}
 				System.out.println("\nPor favor, digite o nome do empregado a ser cadastrado:");
 				empregados[atual] = new Empregado();
 				empregados[atual].nome = entrada.nextLine();
@@ -46,13 +54,13 @@ public class FolhadePagamento {
 				System.out.println("\nPor favor, escolha o tipo de pagamento do empregado:");
 				System.out.println("\nH - Horista");
 				System.out.println("A - Assalariado");
-				System.out.println("C - Comissionados");
+				System.out.println("C - Comissionado");
 				empregados[atual].tipoPagamento = (char) System.in.read();
 				System.out.println("\nPor favor, digite o salário a ser pago ao empregado:");
 				if (empregados[atual].tipoPagamento == 'H') {
 					empregados[atual].salarioHora = entrada.nextDouble();
 				} else {
-					empregados[atual].salarioMes = entrada.nextDouble();
+					empregados[atual].salarioFixo = entrada.nextDouble();
 					if (empregados[atual].tipoPagamento == 'C') {
 						System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
 						empregados[atual].percentual = entrada.nextDouble();
@@ -60,6 +68,7 @@ public class FolhadePagamento {
 				}
 				System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
 				System.out.println("Opções: Correios, Depósito, Pessoalmente");
+				lixo = entrada.nextLine();
 				empregados[atual].metodo = entrada.nextLine();
 				empregados[atual].comissao = 0;
 				empregados[atual].horas = 0;
@@ -71,18 +80,18 @@ public class FolhadePagamento {
 				System.out.print("Tipo: ");
 				if (empregados[atual].tipoPagamento == 'C') {
 					System.out.println("Comissionado");
-					System.out.printf("Valor a ser pago por período de trabalho combinado: %.2f\n",
-							empregados[atual].salarioMes);
+					System.out.printf("Valor a ser pago quinzenalmente: %.2f\n",
+							empregados[atual].salarioFixo);
 				} else if (empregados[atual].tipoPagamento == 'A') {
 					System.out.println("Assalariado");
-					System.out.printf("Valor a ser pago por período de trabalho combinado: %.2f\n",
-							empregados[atual].salarioMes);
+					System.out.printf("Valor a ser pago por período mensalmente: %.2f\n",
+							empregados[atual].salarioFixo);
 				} else if (empregados[atual].tipoPagamento == 'H') {
 					System.out.println("Horista");
 					System.out.printf("Valor a ser pago por período de trabalho combinado: %.2f\n",
 							empregados[atual].salarioHora);
 				}
-				atual++;
+				System.out.println("Método de pagamento escolhido: " + empregados[atual].metodo);
 				break;
 			case 2:
 				System.out.println("\nPor favor, digite o número de cadastro do empregado a ser removido:");
@@ -93,7 +102,7 @@ public class FolhadePagamento {
 				} else {
 					System.out.println("Deseja remover " + empregados[cadastro].nome + "?");
 					String resposta = entrada.nextLine();
-					if(resposta.equals("sim")){
+					if (resposta.equals("sim")) {
 						empregados[cadastro] = null;
 						System.out.println("Empregado removido com sucesso!");
 					}
