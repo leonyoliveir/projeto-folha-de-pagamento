@@ -107,6 +107,10 @@ public class FolhadePagamento {
 		System.out.println("O funcionário faz parte do sindicato?");
 		System.out.println("S - Sim ou N - Não");
 		empregados[atual].sindicalista = (char) System.in.read(); 
+		if(empregados[atual].sindicalista == 'S'){
+			System.out.println("Qual o valor da taxa do salário destinada ao sindicato?");
+			empregados[atual].taxa = entrada.nextDouble();
+		}
 		
 		cadastrado(empregados[atual]);
 
@@ -210,8 +214,11 @@ public class FolhadePagamento {
 	
 		System.out.println("Digite o número de cadastro do empregado:");
 		int cadastro = entrada.nextInt() - 1;
+		
 		if(empregados[cadastro] == null){
 			System.out.println("Empregado não cadastrado!");
+		} else {
+			
 		}
 	}
 	
