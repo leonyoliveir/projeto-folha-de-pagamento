@@ -11,6 +11,7 @@ class Empregado {
 	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcionários comissionados
 	public double salario; // Guarda o salário total a ser pago de cada funcionário
 	public double taxa; // Guarda a taxa sindical do empregado
+	public long numeroSindicato; //
 	
 }
 
@@ -60,9 +61,9 @@ public class FolhadePagamento {
 		System.out.println("Método de pagamento escolhido: " + empregado.metodo);
 		
 		if(empregado.sindicalista == 'S'){
-			System.out.println("Faz parte do sindicato");
+			System.out.println("Faz parte do sindicato\n");
 		} else {
-			System.out.println("Não faz parte do sindicato");
+			System.out.println("Não faz parte do sindicato\n");
 		}
 		
 	}
@@ -104,11 +105,13 @@ public class FolhadePagamento {
 		empregados[atual].metodo = entrada.nextLine();
 		empregados[atual].numeroCadastro = atual + 1;
 		
-		System.out.println("O funcionário faz parte do sindicato?");
+		System.out.println("\nO funcionário faz parte do sindicato?");
 		System.out.println("S - Sim ou N - Não");
 		empregados[atual].sindicalista = (char) System.in.read(); 
 		if(empregados[atual].sindicalista == 'S'){
-			System.out.println("Qual o valor da taxa do salário destinada ao sindicato?");
+			System.out.println("\nQual o número e identificação do funcionário no sindicato?");
+			empregados[atual].numeroSindicato = entrada.nextLong();
+			System.out.println("\nQual o valor da taxa do salário destinada ao sindicato?");
 			empregados[atual].taxa = entrada.nextDouble();
 		}
 		
@@ -205,8 +208,39 @@ public class FolhadePagamento {
 				System.out.println("A - Assalariado");
 				System.out.println("C - Comissionados");
 				empregados[cadastro].tipo = (char) System.in.read();
-			}		
+			}
+			
+			System.out.println("\nPor favor, digite o salário a ser pago ao empregado:");
+			if (empregados[cadastro].tipo == 'H') {
+				empregados[cadastro].salarioHora = entrada.nextDouble();
+			} else {
+				empregados[cadastro].salarioFixo = entrada.nextDouble();
+				if (empregados[cadastro].tipo == 'C') {
+					System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
+					empregados[cadastro].percentual = entrada.nextDouble();
+				}
+			}
+			
+			System.out.println("\nO funcionário faz parte do sindicato?");
+			System.out.println("S - Sim ou N - Não");
+			empregados[cadastro].sindicalista = (char) System.in.read(); 
+			if(empregados[cadastro].sindicalista == 'S'){
+				System.out.println("\nQual o número e identificação do funcionário no sindicato?");
+				empregados[cadastro].numeroSindicato = entrada.nextLong();
+				System.out.println("\nQual o valor da taxa do salário destinada ao sindicato?");
+				empregados[cadastro].taxa = entrada.nextDouble();
+			}
+			lixo = entrada.nextLine();
+			System.out.println("Deseja alterar a forma de pagamento do funcionário: " + empregados[cadastro].metodo + "?");
+			resposta = entrada.nextLine();
+			if (resposta.equals("sim")) {
+				System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
+				System.out.println("Opções: Correios, Depósito, Pessoalmente");
+				empregados[cadastro].metodo = entrada.nextLine();
+			}
+			
 		}
+		System.out.println("Dados alterados com sucesso!");
 			
 	}
 
@@ -217,18 +251,25 @@ public class FolhadePagamento {
 		
 		if(empregados[cadastro] == null){
 			System.out.println("Empregado não cadastrado!");
+		} else if (empregados[cadastro].sindicalista == 'S'){
+			System.out.println("Digite a taxa a ser deduzida do pagamento do funcionário:");
+			empregados[cadastro].taxa += entrada.nextDouble();
+			System.out.println("Taxa registrada com sucesso!");
 		} else {
-			
+			System.out.println("Empregado não faz parte do sindicato!");
 		}
+		
 	}
 	
 	public static void main(String[] args) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 		Empregado[] empregados = new Empregado[20];
+		int opcao;
 
+		do{
 		menu();
-		int opcao = entrada.nextInt();
+		opcao = entrada.nextInt();
 		String lixo = entrada.nextLine();
 
 		switch (opcao) {
@@ -255,7 +296,7 @@ public class FolhadePagamento {
 			
 		case 5:
 			
-			
+			taxa(entrada, empregados);
 			break;
 			
 		case 6:
@@ -264,5 +305,6 @@ public class FolhadePagamento {
 			break;
 		
 		}
+		}while (opcao != 0);
 	}
 }
