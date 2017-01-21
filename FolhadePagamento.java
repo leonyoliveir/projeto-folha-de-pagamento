@@ -5,11 +5,13 @@ class Empregado {
 	public String nome, endereco, metodo; // Guardam o nome, endereço e método de pagamento escolhido pelo funcionário
 	public int numeroCadastro; // Guarda o número de cadastro do funcionário
 	public char tipo; // Guarda o tipo do funcionário: A - Assalariado, H - Horista, C - Comissionado
+	public char sindicalista; // Guarda a informação se o funcionário é do sindicato ou não: S - Sim, N - Não
 	public double salarioHora; // Guarda o salário a ser pago por hora para funcionários horistas
 	public double salarioFixo; // Guarda o salário fixo a ser pago para funcionários assalariados
 	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcionários comissionados
 	public double salario; // Guarda o salário total a ser pago de cada funcionário
-
+	public double taxa; // Guarda a taxa sindical do empregado
+	
 }
 
 public class FolhadePagamento {
@@ -35,10 +37,13 @@ public class FolhadePagamento {
 	}
 
 	public static void cadastrado(Empregado empregado) { // Imprime na tela os dados do empregado cadastrado
+		
 		System.out.println("\nFuncionário cadastrado com sucesso!");
+		
 		System.out.printf("\nNúmero de cadastro: %d\n", empregado.numeroCadastro);
 		System.out.println("Nome: " + empregado.nome);
 		System.out.println("Endereço: " + empregado.endereco);
+		
 		System.out.print("Tipo: ");
 		if (empregado.tipo == 'C') {
 			System.out.println("Comissionado");
@@ -50,8 +55,16 @@ public class FolhadePagamento {
 		} else if (empregado.tipo == 'H') {
 			System.out.println("Horista");
 			System.out.printf("Valor a ser pago por hora: %.2f\n", empregado.salarioHora);
+		
 		}
 		System.out.println("Método de pagamento escolhido: " + empregado.metodo);
+		
+		if(empregado.sindicalista == 'S'){
+			System.out.println("Faz parte do sindicato");
+		} else {
+			System.out.println("Não faz parte do sindicato");
+		}
+		
 	}
 
 	public static void adicionar(Scanner entrada, Empregado[] empregados) throws Exception { // Adiciona um novo empregado ao sistema
@@ -61,15 +74,19 @@ public class FolhadePagamento {
 			atual++;
 		}
 		empregados[atual] = new Empregado();
+		
 		System.out.println("\nPor favor, digite o nome do empregado a ser cadastrado:");
 		empregados[atual].nome = entrada.nextLine();
+		
 		System.out.println("\nPor favor, digite o endereço do empregado:");
 		empregados[atual].endereco = entrada.nextLine();
+		
 		System.out.println("\nPor favor, escolha o tipo de pagamento do empregado:");
 		System.out.println("\nH - Horista");
 		System.out.println("A - Assalariado");
 		System.out.println("C - Comissionado");
 		empregados[atual].tipo = (char) System.in.read();
+		
 		System.out.println("\nPor favor, digite o salário a ser pago ao empregado:");
 		if (empregados[atual].tipo == 'H') {
 			empregados[atual].salarioHora = entrada.nextDouble();
@@ -80,11 +97,17 @@ public class FolhadePagamento {
 				empregados[atual].percentual = entrada.nextDouble();
 			}
 		}
+		
 		System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
 		System.out.println("Opções: Correios, Depósito, Pessoalmente");
 		String lixo = entrada.nextLine();
 		empregados[atual].metodo = entrada.nextLine();
 		empregados[atual].numeroCadastro = atual + 1;
+		
+		System.out.println("O funcionário faz parte do sindicato?");
+		System.out.println("S - Sim ou N - Não");
+		empregados[atual].sindicalista = (char) System.in.read(); 
+		
 		cadastrado(empregados[atual]);
 
 	}
@@ -94,6 +117,7 @@ public class FolhadePagamento {
 		System.out.println("\nPor favor, digite o número de cadastro do empregado a ser removido:");
 		int cadastro = entrada.nextInt() - 1;
 		String lixo = entrada.nextLine();
+		
 		if (empregados[cadastro] == null) {
 			System.out.println("Empregado não cadastrado!");
 		} else {
@@ -104,12 +128,14 @@ public class FolhadePagamento {
 				System.out.println("Empregado removido com sucesso!");
 			}
 		}
+		
 	}
-	
-	
+
 	public static void ponto(Scanner entrada, Empregado[] empregados){ // Lança o cartão de ponto a um empregado
+		
 		System.out.println("Digite o número de cadastro do empregado:");
 		int cadastro = entrada.nextInt() - 1;
+		
 		if (empregados[cadastro] == null) {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro].tipo == 'H') {
@@ -122,12 +148,14 @@ public class FolhadePagamento {
 		} else {
 			System.out.println("Empregado não é horista!");
 		}
+		
 	}
 	
 	public static void venda(Scanner entrada, Empregado[] empregados){
 		
 		System.out.println("Digite o número de cadastro do empregado:");
 		int cadastro = entrada.nextInt() - 1;
+		
 		if(empregados[cadastro] == null){
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
@@ -140,16 +168,61 @@ public class FolhadePagamento {
 		
 	}
 	
+	public static void alteracoes(Scanner entrada, Empregado[] empregados) throws Exception { // Altera dados de um funcionário
+		
+		System.out.println("Digite o número de cadastro do empregado:");
+		int cadastro = entrada.nextInt() - 1;
+		String lixo;
+		
+		if (empregados[cadastro] == null) {
+			System.out.println("Empregado não cadastrado!");
+		} else {
+			
+			System.out.println("Deseja alterar o nome do funcionário: " + empregados[cadastro].nome + "?");
+			lixo = entrada.nextLine();
+			String resposta = entrada.nextLine();
+			if (resposta.equals("sim")) {
+				System.out.println("Digite o nome do funcionário:");
+				empregados[cadastro].nome = entrada.nextLine();
+			}
+			
+			System.out.println("Deseja alterar o endereço do funcionário: " + empregados[cadastro].endereco + "?");
+			resposta = entrada.nextLine();
+			if (resposta.equals("sim")) {
+				System.out.println("Digite o endereço do funcionário:");
+				empregados[cadastro].endereco = entrada.nextLine();
+			}
+			
+			System.out.println("Deseja alterar o tipo de pagamento do funcionário: " + empregados[cadastro].tipo + "?");
+			resposta = entrada.nextLine();
+			if (resposta.equals("sim")) {
+				System.out.println("Digite o tipo de pagamento do funcionário:");
+				System.out.println("\nH - Horista");
+				System.out.println("A - Assalariado");
+				System.out.println("C - Comissionados");
+				empregados[cadastro].tipo = (char) System.in.read();
+			}		
+		}
+			
+	}
+
+	public static void taxa(Scanner entrada, Empregado[] empregados){
+	
+		System.out.println("Digite o número de cadastro do empregado:");
+		int cadastro = entrada.nextInt() - 1;
+		if(empregados[cadastro] == null){
+			System.out.println("Empregado não cadastrado!");
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
-		int opcao, cadastro;
 		Empregado[] empregados = new Empregado[20];
 
 		menu();
-		opcao = entrada.nextInt();
+		int opcao = entrada.nextInt();
 		String lixo = entrada.nextLine();
-		int atual = 0;
 
 		switch (opcao) {
 		
@@ -174,40 +247,15 @@ public class FolhadePagamento {
 			break;
 			
 		case 5:
-
+			
+			
 			break;
+			
 		case 6:
 			
-			System.out.println("Digite o número de cadastro do empregado:");
-			cadastro = entrada.nextInt() - 1;
-			if (empregados[cadastro] == null) {
-				System.out.println("Empregado não cadastrado!");
-			} else {
-				System.out.println("Deseja alterar o nome do funcionário: " + empregados[cadastro].nome + "?");
-				lixo = entrada.nextLine();
-				String resposta = entrada.nextLine();
-				if (resposta.equals("sim")) {
-					System.out.println("Digite o nome do funcionário:");
-					empregados[cadastro].nome = entrada.nextLine();
-				}
-				System.out.println("Deseja alterar o endereço do funcionário: " + empregados[cadastro].endereco + "?");
-				resposta = entrada.nextLine();
-				if (resposta.equals("sim")) {
-					System.out.println("Digite o endereço do funcionário:");
-					empregados[cadastro].endereco = entrada.nextLine();
-				}
-				System.out.println(
-						"Deseja alterar o tipo de pagamento do funcionário: " + empregados[cadastro].tipo + "?");
-				resposta = entrada.nextLine();
-				if (resposta.equals("sim")) {
-					System.out.println("Digite o tipo de pagamento do funcionário:");
-					System.out.println("\nH - Horista");
-					System.out.println("A - Assalariado");
-					System.out.println("C - Comissionados");
-					empregados[cadastro].tipo = (char) System.in.read();
-				}
-				break;
-			}
+			alteracoes(entrada, empregados);
+			break;
+		
 		}
 	}
 }
