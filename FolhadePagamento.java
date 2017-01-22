@@ -11,7 +11,7 @@ class Empregado {
 	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcionários comissionados
 	public double salario; // Guarda o salário total a ser pago de cada funcionário
 	public double taxa; // Guarda a taxa sindical do empregado
-	public long numeroSindicato; //
+	public long numeroSindicato; // Guarda a ID do funcionário no sindicato
 	
 }
 
@@ -68,6 +68,31 @@ public class FolhadePagamento {
 		
 	}
 
+	public static boolean ultimoDiaDoMes (int ano, int mes, int dia){ // Informa se o dia é o último do mês
+		
+		if ((dia == 31) && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)){
+			return true;
+		} else if ((dia == 30) && (mes == 4 || mes == 6 || mes == 9 || mes == 11)){
+			return true;
+		} else if ((dia == 28) && (mes == 2) && (ano % 4 != 0)){
+			return true;
+		} else if ((dia == 29) && (mes == 2) && (ano % 4 == 0)){
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	public static void pagarAssalariados(Empregado[] empregados){ // Informa os funcionários assalariados que devem ser pagos
+		
+		for (int i = 0; i < 20; i++){
+			if (empregados[i] != null && empregados[i].tipo == 'A'){
+				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salarioFixo - empregados[i].taxa, empregados[i].metodo);
+			}
+		}
+	}
+	
 	public static void adicionar(Scanner entrada, Empregado[] empregados) throws Exception { // Adiciona um novo empregado ao sistema
 		
 		int atual = 0;
@@ -158,7 +183,7 @@ public class FolhadePagamento {
 		
 	}
 	
-	public static void venda(Scanner entrada, Empregado[] empregados){
+	public static void venda(Scanner entrada, Empregado[] empregados){ // Lança o resultado da venda de um empregado
 		
 		System.out.println("Digite o número de cadastro do empregado:");
 		int cadastro = entrada.nextInt() - 1;
@@ -244,7 +269,7 @@ public class FolhadePagamento {
 			
 	}
 
-	public static void taxa(Scanner entrada, Empregado[] empregados){
+	public static void taxa(Scanner entrada, Empregado[] empregados){ // Registra uma taxa cobrada pelo sindicato a um funcionário
 	
 		System.out.println("Digite o número de cadastro do empregado:");
 		int cadastro = entrada.nextInt() - 1;
@@ -261,6 +286,25 @@ public class FolhadePagamento {
 		
 	}
 	
+	public static void folha(Scanner entrada, Empregado[] empregados){ //Roda a folha de pagamento para determinado dia informado
+		
+		System.out.println("Por favor, informe o ano atual");
+		int ano = entrada.nextInt();
+		System.out.println("Por favor, informe o mês atual:");
+		int mes = entrada.nextInt();
+		System.out.println("Por favor, informe a data atual:");
+		int data = entrada.nextInt();
+		System.out.println("Por favor, informe o dia da semana atual (Ex: Segunda-feira, Sábado):");
+		String lixo = entrada.nextLine();
+		String dia = entrada.nextLine();
+		
+		boolean ultimo = ultimoDiaDoMes(ano, mes, data);
+		
+		if(ultimo == true){
+			pagarAssalariados(empregados);
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
@@ -275,35 +319,33 @@ public class FolhadePagamento {
 		switch (opcao) {
 		
 		case 1:
-
 			adicionar(entrada, empregados);
 			break;
 
 		case 2:
-			
 			remover(entrada, empregados);
 			break;
 			
 		case 3:
-			
 			ponto(entrada, empregados);
 			break;
 			
 		case 4:
-			
 			venda(entrada, empregados);
 			break;
 			
 		case 5:
-			
 			taxa(entrada, empregados);
 			break;
 			
 		case 6:
-			
 			alteracoes(entrada, empregados);
 			break;
-		
+			
+		case 7:
+			folha(entrada, empregados);
+			break;
+			
 		}
 		}while (opcao != 0);
 	}
