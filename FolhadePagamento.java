@@ -10,7 +10,7 @@ class Empregado {
 	public double salarioFixo; // Guarda o salário fixo a ser pago para funcionários assalariados
 	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcionários comissionados
 	public double salario; // Guarda o salário total a ser pago de cada funcionário
-	public double taxa; // Guarda a taxa sindical do empregado
+	public double taxaFixa, adicionais; // Guarda a taxa sindical do empregado e as taxas adicionais que possam ser cobradas
 	public long numeroSindicato; // Guarda a ID do funcionário no sindicato
 	
 }
@@ -62,6 +62,7 @@ public class FolhadePagamento {
 		
 		if(empregado.sindicalista == 'S'){
 			System.out.println("Faz parte do sindicato\n");
+			System.out.println("ID no sindicato: " + empregado.numeroSindicato);
 		} else {
 			System.out.println("Não faz parte do sindicato\n");
 		}
@@ -88,7 +89,20 @@ public class FolhadePagamento {
 		
 		for (int i = 0; i < 20; i++){
 			if (empregados[i] != null && empregados[i].tipo == 'A'){
-				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salarioFixo - empregados[i].taxa, empregados[i].metodo);
+				empregados[i].salario = empregados[i].salarioFixo - (empregados[i].taxaFixa + empregados[i].adicionais);
+				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				empregados[i].salario = 0;
+			}
+		}
+	}
+	
+	public static void pagarHoristas(Empregado[] empregados){ // Informa os funcionários horistas que devem ser pagos
+		
+		for(int i = 0; i < 20; i++){
+			if (empregados[i] != null && empregados[i].tipo == 'H'){
+				empregados[i].salario -= empregados[i].taxaFixa + empregados[i].adicionais;
+				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				empregados[i].salario = 0;
 			}
 		}
 	}
@@ -137,8 +151,13 @@ public class FolhadePagamento {
 			System.out.println("\nQual o número e identificação do funcionário no sindicato?");
 			empregados[atual].numeroSindicato = entrada.nextLong();
 			System.out.println("\nQual o valor da taxa do salário destinada ao sindicato?");
-			empregados[atual].taxa = entrada.nextDouble();
+			empregados[atual].taxaFixa = entrada.nextDouble();
+		} else {
+			empregados[atual].numeroSindicato = 0;
+			empregados[atual].taxaFixa = 0;
 		}
+		empregados[atual].adicionais = 0;
+		empregados[atual].salario = 0;
 		
 		cadastrado(empregados[atual]);
 
@@ -173,8 +192,10 @@ public class FolhadePagamento {
 		} else if (empregados[cadastro].tipo == 'H') {
 			System.out.println("Digite o número de horas:");
 			double horas = entrada.nextDouble();
-			if (horas <= 8) {
-				empregados[cadastro].salario += horas * empregados[cadastro].salarioHora;
+			if (horas > 8) {
+				empregados[cadastro].salario += (horas * empregados[cadastro].salarioHora * 1.5);
+			} else {
+				empregados[cadastro].salario += (horas * empregados[cadastro].salarioHora);
 			}
 			System.out.println("Cartão de ponto lançado com sucesso!");
 		} else {
@@ -209,64 +230,67 @@ public class FolhadePagamento {
 		if (empregados[cadastro] == null) {
 			System.out.println("Empregado não cadastrado!");
 		} else {
-			
 			System.out.println("Deseja alterar o nome do funcionário: " + empregados[cadastro].nome + "?");
 			lixo = entrada.nextLine();
 			String resposta = entrada.nextLine();
-			if (resposta.equals("sim")) {
+			if (resposta.equals("Sim")) {
 				System.out.println("Digite o nome do funcionário:");
 				empregados[cadastro].nome = entrada.nextLine();
 			}
 			
 			System.out.println("Deseja alterar o endereço do funcionário: " + empregados[cadastro].endereco + "?");
 			resposta = entrada.nextLine();
-			if (resposta.equals("sim")) {
+			if (resposta.equals("Sim")) {
 				System.out.println("Digite o endereço do funcionário:");
 				empregados[cadastro].endereco = entrada.nextLine();
 			}
 			
 			System.out.println("Deseja alterar o tipo de pagamento do funcionário: " + empregados[cadastro].tipo + "?");
 			resposta = entrada.nextLine();
-			if (resposta.equals("sim")) {
+			if (resposta.equals("Sim")) {
 				System.out.println("Digite o tipo de pagamento do funcionário:");
 				System.out.println("\nH - Horista");
 				System.out.println("A - Assalariado");
 				System.out.println("C - Comissionados");
 				empregados[cadastro].tipo = (char) System.in.read();
-			}
-			
-			System.out.println("\nPor favor, digite o salário a ser pago ao empregado:");
-			if (empregados[cadastro].tipo == 'H') {
-				empregados[cadastro].salarioHora = entrada.nextDouble();
-			} else {
-				empregados[cadastro].salarioFixo = entrada.nextDouble();
-				if (empregados[cadastro].tipo == 'C') {
-					System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
-					empregados[cadastro].percentual = entrada.nextDouble();
+				System.out.print("\nPor favor, digite o salário a ser pago ao empregado ");
+				if (empregados[cadastro].tipo == 'H') {
+					System.out.println("por hora:");
+					empregados[cadastro].salarioHora = entrada.nextDouble();
+				} else {
+					System.out.println("por mês:");
+					empregados[cadastro].salarioFixo = entrada.nextDouble();
+					if (empregados[cadastro].tipo == 'C') {
+						System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
+						empregados[cadastro].percentual = entrada.nextDouble();
+					}
 				}
 			}
 			
-			System.out.println("\nO funcionário faz parte do sindicato?");
-			System.out.println("S - Sim ou N - Não");
-			empregados[cadastro].sindicalista = (char) System.in.read(); 
-			if(empregados[cadastro].sindicalista == 'S'){
-				System.out.println("\nQual o número e identificação do funcionário no sindicato?");
-				empregados[cadastro].numeroSindicato = entrada.nextLong();
-				System.out.println("\nQual o valor da taxa do salário destinada ao sindicato?");
-				empregados[cadastro].taxa = entrada.nextDouble();
+			System.out.println("Deseja alterar a participação do funcionário no sindicato: " + empregados[cadastro].sindicalista + "?");
+			resposta = entrada.nextLine();
+			if (resposta.equals("Sim")) {
+				System.out.println("\nO funcionário faz parte do sindicato?");
+				System.out.println("S - Sim ou N - Não");
+				empregados[cadastro].sindicalista = (char) System.in.read(); 
+				if(empregados[cadastro].sindicalista == 'S'){
+					System.out.println("\nQual o número de identificação do funcionário no sindicato?");
+					empregados[cadastro].numeroSindicato = entrada.nextLong();
+					System.out.println("\nQual o valor da taxa do salário destinada ao sindicato?");
+					empregados[cadastro].taxaFixa = entrada.nextDouble();
+					lixo = entrada.nextLine(); 
+				}
 			}
-			lixo = entrada.nextLine();
+
 			System.out.println("Deseja alterar a forma de pagamento do funcionário: " + empregados[cadastro].metodo + "?");
 			resposta = entrada.nextLine();
-			if (resposta.equals("sim")) {
+			if (resposta.equals("Sim")) {
 				System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
 				System.out.println("Opções: Correios, Depósito, Pessoalmente");
 				empregados[cadastro].metodo = entrada.nextLine();
 			}
-			
 		}
 		System.out.println("Dados alterados com sucesso!");
-			
 	}
 
 	public static void taxa(Scanner entrada, Empregado[] empregados){ // Registra uma taxa cobrada pelo sindicato a um funcionário
@@ -278,7 +302,7 @@ public class FolhadePagamento {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro].sindicalista == 'S'){
 			System.out.println("Digite a taxa a ser deduzida do pagamento do funcionário:");
-			empregados[cadastro].taxa += entrada.nextDouble();
+			empregados[cadastro].adicionais += entrada.nextDouble();
 			System.out.println("Taxa registrada com sucesso!");
 		} else {
 			System.out.println("Empregado não faz parte do sindicato!");
@@ -302,6 +326,10 @@ public class FolhadePagamento {
 		
 		if(ultimo == true){
 			pagarAssalariados(empregados);
+		}
+		
+		if(dia.equals("Sexta-feira")){
+			pagarHoristas(empregados);
 		}
 	}
 	
