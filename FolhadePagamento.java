@@ -100,7 +100,18 @@ public class FolhadePagamento {
 		
 		for(int i = 0; i < 20; i++){
 			if (empregados[i] != null && empregados[i].tipo == 'H'){
-				empregados[i].salario -= empregados[i].taxaFixa + empregados[i].adicionais;
+				empregados[i].salario -= (empregados[i].taxaFixa + empregados[i].adicionais) / 2;
+				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				empregados[i].salario = 0;
+			}
+		}
+	}
+	
+	public static void pagarComissionados (Empregado[] empregados){
+		
+		for(int i = 0; i < 20; i++){
+			if(empregados[i] != null && empregados[i].tipo == 'C'){
+				empregados[i].salario += (empregados[i].salarioFixo/2) - (empregados[i].adicionais + empregados[i].taxaFixa)/2;
 				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
 			}
@@ -213,7 +224,7 @@ public class FolhadePagamento {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
 			System.out.println("Digite o resultado da venda:");
-			empregados[cadastro].salario += entrada.nextDouble() * empregados[cadastro].percentual;
+			empregados[cadastro].salario += entrada.nextDouble() * (empregados[cadastro].percentual/100);
 			System.out.println("Resultado lançado com sucesso!");
 		} else {
 			System.out.println("Empregado não é comissionado!");
@@ -330,6 +341,9 @@ public class FolhadePagamento {
 		
 		if(dia.equals("Sexta-feira")){
 			pagarHoristas(empregados);
+			if((data > 7 && data < 15) || (data > 21 && data < 29)){
+				pagarComissionados(empregados);
+			}
 		}
 	}
 	
@@ -376,5 +390,6 @@ public class FolhadePagamento {
 			
 		}
 		}while (opcao != 0);
+		entrada.close();
 	}
 }
