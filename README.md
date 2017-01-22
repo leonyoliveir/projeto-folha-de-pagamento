@@ -9,7 +9,7 @@ Funções que o sistema deve ter:
 4. Lançar um resultado venda ✓
 5. Lançar uma taxa de serviço ✓
 6. Alterar detalhes de um empregado ✓
-7. Rodar a folha de pagamento para hoje
+7. Rodar a folha de pagamento para hoje ✓
 8. Undo / Redo
 9. Agenda de Pagamento
 10. Criação de Novas Agendas de Pagamento
