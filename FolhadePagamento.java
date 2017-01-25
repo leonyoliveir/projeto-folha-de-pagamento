@@ -587,6 +587,7 @@ public class FolhadePagamento {
 				
 			case 11:
 				imprimeFuncionarios(empregados);
+				break;
 				
 			case 0:
 				System.out.println("Obrigado por utilizar a  Wolves & Villagers Sistema de Cadastros!");
