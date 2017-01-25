@@ -77,7 +77,6 @@ public class FolhadePagamento {
 		} else if (empregado.tipo == 'H') {
 			System.out.println("Horista");
 			System.out.printf("Valor a ser pago por hora: %.2f\n", empregado.salarioHora);
-		
 		}
 		System.out.println("Método de pagamento escolhido: " + empregado.metodo);
 		
@@ -109,7 +108,8 @@ public class FolhadePagamento {
 	public static void pagarMensal(Empregado[] empregados, int data){ // Informa os funcionários assalariados que devem ser pagos
 		
 		for (int i = 0; i < 20; i++){
-			if (empregados[i] != null && empregados[i].tipo == 'M' && empregados[i].agendaData == data){
+			
+			if (empregados[i] != null && empregados[i].agendaTipo == 'M' && empregados[i].agendaData == data){
 				empregados[i].salario = empregados[i].salarioFixo - (empregados[i].taxaFixa + empregados[i].adicionais);
 				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
@@ -164,7 +164,7 @@ public class FolhadePagamento {
 		if (empregados[atual].tipo == 'H') {
 			System.out.println("por hora:");
 			empregados[atual].salarioHora = entrada.nextDouble();
-			empregados[atual].agendaDia = 5;
+			empregados[atual].agendaDia = 4;
 			empregados[atual].agendaData = -1;
 			empregados[atual].agendaTipo = 'S';
 			empregados[atual].percentual = 0;
@@ -175,15 +175,15 @@ public class FolhadePagamento {
 			if (empregados[atual].tipo == 'C') {
 				System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado: (ex: 20)");
 				empregados[atual].percentual = entrada.nextDouble();
-				empregados[atual].agendaDia = 5;
+				empregados[atual].agendaDia = 4;
 				empregados[atual].agendaData = -1;
 				empregados[atual].agendaTipo = 'B';
 				empregados[atual].salarioHora = 0;
 			} else {
 				empregados[atual].percentual = 0;
 				empregados[atual].agendaDia = -1;
-				empregados[atual].agendaData = 28;
-				empregados[atual].agendaTipo = 'B';
+				empregados[atual].agendaData = 27;
+				empregados[atual].agendaTipo = 'M';
 				empregados[atual].salarioHora = 0;
 			}
 		}
@@ -246,7 +246,7 @@ public class FolhadePagamento {
 		} else if (empregados[cadastro].tipo == 'H') {
 			System.out.println("Digite o número de horas:");
 			double horas = entrada.nextDouble();
-			empregados[21] = empregados[cadastro];
+			empregados[20] = empregados[cadastro];
 			if (horas > 8) {
 				empregados[cadastro].salario += (((horas - 8) * empregados[cadastro].salarioHora * 1.5) + (8 * empregados[cadastro].salarioHora));
 			} else {
@@ -269,7 +269,7 @@ public class FolhadePagamento {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
 			System.out.println("Digite o resultado da venda:");
-			empregados[21] = empregados[cadastro];
+			empregados[20] = empregados[cadastro];
 			empregados[cadastro].salario += entrada.nextDouble() * (empregados[cadastro].percentual/100);
 			System.out.println("Resultado lançado com sucesso!");
 		} else {
@@ -287,7 +287,7 @@ public class FolhadePagamento {
 		if (empregados[cadastro] == null) {
 			System.out.println("Empregado não cadastrado!");
 		} else {
-			empregados[21] = empregados[cadastro];
+			empregados[20] = empregados[cadastro];
 			System.out.println("Deseja alterar o nome do funcionário: " + empregados[cadastro].nome + "? (Sim/Não)");
 			entrada.nextLine();
 			String resposta = entrada.nextLine();
@@ -429,7 +429,7 @@ public class FolhadePagamento {
 	public static void novaAgenda(Scanner entrada, Agenda agenda) throws Exception { // Cria uma nova agenda de pagamento
 		
 		System.out.println("Qual o tipo de agenda que deseja adicionar?");
-		System.out.println("1 - Segunda-feira\n2 - Terça-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+		System.out.println("B - Bi-semanal, S - Semanal, M - Mensal");
 		char opcao = (char) System.in.read();
 		int escolha;
 		
