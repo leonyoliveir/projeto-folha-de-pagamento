@@ -2,27 +2,27 @@ import java.util.Scanner;
 
 class Agenda{
 	
-	public int[] diaS = new int[5]; // Caso a agenda seja semanal, guarda o dia da semana que ser√° realizado o pagamento
-	public int[] diaB = new int[5]; // Caso a agenda seja bi-semanal, guarda o dia da semana que ser√° realizado o pagamento
-	public int[] data = new int[28]; // Caso a agenda seja mensal, guarda a data do pagamento (caso seja 28, o √∫ltimo dia do m√™s √© considerado)
+	public int[] diaS = new int[5]; // Caso a agenda seja semanal, guarda o dia da semana que ser· realizado o pagamento
+	public int[] diaB = new int[5]; // Caso a agenda seja bi-semanal, guarda o dia da semana que ser· realizado o pagamento
+	public int[] data = new int[28]; // Caso a agenda seja mensal, guarda a data do pagamento (caso seja 28, o ˙ltimo dia do mÍs È considerado)
 	
 }
 
 class Empregado {
 
-	public String nome, endereco, metodo; // Guardam o nome, endere√ßo e m√©todo de pagamento escolhido pelo funcion√°rio
-	public int numeroCadastro; // Guarda o n√∫mero de cadastro do funcion√°rio
-	public char tipo; // Guarda o tipo do funcion√°rio: A - Assalariado, H - Horista, C - Comissionado
-	public char sindicalista; // Guarda a informa√ß√£o se o funcion√°rio √© do sindicato ou n√£o: S - Sim, N - N√£o
-	public double salarioHora; // Guarda o sal√°rio a ser pago por hora para funcion√°rios horistas
-	public double salarioFixo; // Guarda o sal√°rio fixo a ser pago para funcion√°rios assalariados
-	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcion√°rios comissionados
-	public double salario; // Guarda o sal√°rio total a ser pago de cada funcion√°rio
+	public String nome, endereco, metodo; // Guardam o nome, endereÁo e mÈtodo de pagamento escolhido pelo funcion·rio
+	public int numeroCadastro; // Guarda o n˙mero de cadastro do funcion·rio
+	public char tipo; // Guarda o tipo do funcion·rio: A - Assalariado, H - Horista, C - Comissionado
+	public char sindicalista; // Guarda a informaÁ„o se o funcion·rio È do sindicato ou n„o: S - Sim, N - N„o
+	public double salarioHora; // Guarda o sal·rio a ser pago por hora para funcion·rios horistas
+	public double salarioFixo; // Guarda o sal·rio fixo a ser pago para funcion·rios assalariados
+	public double percentual; // Guarda o percentual sobre as vendas a ser pago para funcion·rios comissionados
+	public double salario; // Guarda o sal·rio total a ser pago de cada funcion·rio
 	public double taxaFixa, adicionais; // Guarda a taxa sindical do empregado e as taxas adicionais que possam ser cobradas
-	public long numeroSindicato; // Guarda a ID do funcion√°rio no sindicato
-	public char agendaTipo; // Guarda o tipo de agenda de pagamento do funcion√°rio: S - Semanal, M - Mensal, B - Bi-semanal
-	public int agendaData; // Caso a agenda seja mensal, esta vari√°vel guarda o dia do pagamento do funcion√°rio
-	public int agendaDia; // Caso a agenda seja semanal, esta vari√°vel guarda o dia da semana do pagamento
+	public long numeroSindicato; // Guarda a ID do funcion·rio no sindicato
+	public char agendaTipo; // Guarda o tipo de agenda de pagamento do funcion·rio: S - Semanal, M - Mensal, B - Bi-semanal
+	public int agendaData; // Caso a agenda seja mensal, esta vari·vel guarda o dia do pagamento do funcion·rio
+	public int agendaDia; // Caso a agenda seja semanal, esta vari·vel guarda o dia da semana do pagamento
 	
 }
 
@@ -30,22 +30,22 @@ public class FolhadePagamento {
 
 	public Scanner entrada = new Scanner(System.in);
 
-	public static void menu() { // Exibe o menu de op√ß√µes do sistema
+	public static void menu() { // Exibe o menu de opÁıes do sistema
 
-		System.out.println("\nBem-vindo ao sistema de cadastros de funcion√°rios da Wolves & Villagers!");
-		System.out.println("\nPor favor, escolha uma op√ß√£o para iniciar:");
-		System.out.println("\n1 - Adicionar um funcion√°rio");
-		System.out.println("2 - Remover um funcion√°rio");
-		System.out.println("3 - Lan√ßar um cart√£o de ponto");
-		System.out.println("4 - Lan√ßar um resultado venda");
-		System.out.println("5 - Lan√ßar uma taxa de servi√ßo");
-		System.out.println("6 - Alterar detalhes de um empregado j√° cadastrado");
+		System.out.println("\nBem-vindo ao sistema de cadastros de funcion·rios da Wolves & Villagers!");
+		System.out.println("\nPor favor, escolha uma opÁ„o para iniciar:");
+		System.out.println("\n1 - Adicionar um funcion·rio");
+		System.out.println("2 - Remover um funcion·rio");
+		System.out.println("3 - LanÁar um cart„o de ponto");
+		System.out.println("4 - LanÁar um resultado venda");
+		System.out.println("5 - LanÁar uma taxa de serviÁo");
+		System.out.println("6 - Alterar detalhes de um empregado j· cadastrado");
 		System.out.println("7 - Rodar a folha de pagamento para hoje");
 		System.out.println("8 - Undo / Redo");
 		System.out.println("9 - Criar nova Agenda de Pagamento");
-		System.out.println("10 - Alterar dia de pagamento de um funcion√°rio");
-		System.out.println("11 - Ver lista de funcion√°rios cadastrados");
-		System.out.println("\nCaso tenha conclu√≠do as atividades, clique em 0 para sair.");
+		System.out.println("10 - Alterar dia de pagamento de um funcion·rio");
+		System.out.println("11 - Ver lista de funcion·rios cadastrados");
+		System.out.println("\nCaso tenha concluÌdo as atividades, clique em 0 para sair.");
 
 	}
 
@@ -53,7 +53,7 @@ public class FolhadePagamento {
 		
 		for(int i = 0; i < 20; i++){
 			if (empregados[i] != null){
-				System.out.println("ID: " + empregados[i].numeroCadastro + "\nFunion√°rio: " + empregados[i].nome + "\n");
+				System.out.println("ID: " + empregados[i].numeroCadastro + "\nFunion·rio: " + empregados[i].nome + "\n");
 			}
 		}
 	}
@@ -81,17 +81,17 @@ public class FolhadePagamento {
 	
 	public static void cadastrado(Empregado empregado) { // Imprime na tela os dados do empregado cadastrado
 		
-		System.out.println("\nFuncion√°rio cadastrado com sucesso!");
+		System.out.println("\nFuncion·rio cadastrado com sucesso!");
 		
-		System.out.printf("\nN√∫mero de cadastro: %d\n", empregado.numeroCadastro);
+		System.out.printf("\nN˙mero de cadastro: %d\n", empregado.numeroCadastro);
 		System.out.println("Nome: " + empregado.nome);
-		System.out.println("Endere√ßo: " + empregado.endereco);
+		System.out.println("EndereÁo: " + empregado.endereco);
 		
 		System.out.print("Tipo: ");
 		if (empregado.tipo == 'C') {
 			System.out.println("Comissionado");
 			System.out.printf("Valor a ser pago quinzenalmente: %.2f\n", empregado.salarioFixo / 2);
-			System.out.println("Percentual de comiss√£o sobre as vendas: " + empregado.percentual + "%");
+			System.out.println("Percentual de comiss„o sobre as vendas: " + empregado.percentual + "%");
 		} else if (empregado.tipo == 'A') {
 			System.out.println("Assalariado");
 			System.out.printf("Valor a ser pago mensalmente: %.2f\n", empregado.salarioFixo);
@@ -99,18 +99,18 @@ public class FolhadePagamento {
 			System.out.println("Horista");
 			System.out.printf("Valor a ser pago por hora: %.2f\n", empregado.salarioHora);
 		}
-		System.out.println("M√©todo de pagamento escolhido: " + empregado.metodo);
+		System.out.println("MÈtodo de pagamento escolhido: " + empregado.metodo);
 		
 		if(empregado.sindicalista == 'S'){
 			System.out.println("Faz parte do sindicato");
 			System.out.println("ID no sindicato: " + empregado.numeroSindicato);
 		} else {
-			System.out.println("N√£o faz parte do sindicato\n");
+			System.out.println("N„o faz parte do sindicato\n");
 		}
 		
 	}
 
-	public static boolean ultimoDiaDoMes (int ano, int mes, int dia){ // Informa se o dia √© o √∫ltimo do m√™s
+	public static boolean ultimoDiaDoMes (int ano, int mes, int dia){ // Informa se o dia È o ˙ltimo do mÍs
 		
 		if ((dia == 31) && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)){
 			return true;
@@ -126,25 +126,25 @@ public class FolhadePagamento {
 		
 	}
 	
-	public static void pagarMensal(Empregado[] empregados, int data){ // Informa os funcion√°rios assalariados que devem ser pagos
+	public static void pagarMensal(Empregado[] empregados, int data){ // Informa os funcion·rios assalariados que devem ser pagos
 		
 		for (int i = 0; i < 20; i++){
 			
 			if (empregados[i] != null && empregados[i].agendaTipo == 'M' && empregados[i].agendaData == data){
 				empregados[i].salario += empregados[i].salarioFixo - (empregados[i].taxaFixa + empregados[i].adicionais);
-				System.out.printf("O funcion√°rio %s receber√° R$ %.2f no m√©todo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				System.out.printf("O funcion·rio %s receber· R$ %.2f no mÈtodo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
 				empregados[i].adicionais = 0;
 			}
 		}
 	}
 	
-	public static void pagarSemanal(Empregado[] empregados, int diaSemana){ // Informa os funcion√°rios horistas que devem ser pagos
+	public static void pagarSemanal(Empregado[] empregados, int diaSemana){ // Informa os funcion·rios horistas que devem ser pagos
 		
 		for(int i = 0; i < 20; i++){
 			if (empregados[i] != null && empregados[i].agendaTipo == 'S' && empregados[i].agendaDia == diaSemana){
 				empregados[i].salario += (empregados[i].salarioFixo/4) - (empregados[i].taxaFixa + empregados[i].adicionais)/4;
-				System.out.printf("O funcion√°rio %s receber√° R$ %.2f no m√©todo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				System.out.printf("O funcion·rio %s receber· R$ %.2f no mÈtodo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
 				empregados[i].adicionais = 0;
 			}
@@ -156,7 +156,7 @@ public class FolhadePagamento {
 		for(int i = 0; i < 20; i++){
 			if(empregados[i] != null && empregados[i].agendaTipo == 'B' && empregados[i].agendaDia == diaSemana){
 				empregados[i].salario += (empregados[i].salarioFixo/2) - (empregados[i].adicionais + empregados[i].taxaFixa)/2;
-				System.out.printf("O funcion√°rio %s receber√° R$ %.2f no m√©todo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
+				System.out.printf("O funcion·rio %s receber· R$ %.2f no mÈtodo: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
 				empregados[i].adicionais = 0;
 			}
@@ -175,7 +175,7 @@ public class FolhadePagamento {
 		System.out.println("\nPor favor, digite o nome do empregado a ser cadastrado:");
 		empregados[atual].nome = entrada.nextLine();
 		
-		System.out.println("\nPor favor, digite o endere√ßo do empregado:");
+		System.out.println("\nPor favor, digite o endereÁo do empregado:");
 		empregados[atual].endereco = entrada.nextLine();
 		
 		System.out.println("\nPor favor, escolha o tipo de pagamento do empregado:");
@@ -184,7 +184,7 @@ public class FolhadePagamento {
 		System.out.println("C - Comissionado");
 		empregados[atual].tipo = (char) System.in.read();
 		
-		System.out.print("\nPor favor, digite o sal√°rio a ser pago ao empregado ");
+		System.out.print("\nPor favor, digite o sal·rio a ser pago ao empregado ");
 		if (empregados[atual].tipo == 'H') {
 			System.out.println("por hora:");
 			empregados[atual].salarioHora = entrada.nextDouble();
@@ -194,10 +194,10 @@ public class FolhadePagamento {
 			empregados[atual].percentual = 0;
 			empregados[atual].salarioFixo = 0;
 		} else {
-			System.out.println("por m√™s:");
+			System.out.println("por mÍs:");
 			empregados[atual].salarioFixo = entrada.nextDouble();
 			if (empregados[atual].tipo == 'C') {
-				System.out.println("Por favor, digite o percentual de comiss√£o a ser pago ao empregado: (ex: 20)");
+				System.out.println("Por favor, digite o percentual de comiss„o a ser pago ao empregado: (ex: 20)");
 				empregados[atual].percentual = entrada.nextDouble();
 				empregados[atual].agendaDia = 4;
 				empregados[atual].agendaData = -1;
@@ -213,18 +213,18 @@ public class FolhadePagamento {
 		}
 		
 		System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
-		System.out.println("Op√ß√µes: Cheque pelos correios, Dep√≥sito banc√°rio, Cheque em m√£os");
+		System.out.println("OpÁıes: Cheque pelos correios, DepÛsito banc·rio, Cheque em m„os");
 		entrada.nextLine();
 		empregados[atual].metodo = entrada.nextLine();
 		empregados[atual].numeroCadastro = atual + 1;
 		
-		System.out.println("\nO funcion√°rio faz parte do sindicato?");
-		System.out.println("S - Sim ou N - N√£o");
+		System.out.println("\nO funcion·rio faz parte do sindicato?");
+		System.out.println("S - Sim ou N - N„o");
 		empregados[atual].sindicalista = (char) System.in.read(); 
 		if(empregados[atual].sindicalista == 'S'){
-			System.out.println("\nQual o n√∫mero de identifica√ß√£o do funcion√°rio no sindicato? (6 d√≠gitos)");
+			System.out.println("\nQual o n˙mero de identificaÁ„o do funcion·rio no sindicato? (6 dÌgitos)");
 			empregados[atual].numeroSindicato = entrada.nextLong();
-			System.out.println("\nQual o valor da taxa do sal√°rio destinada ao sindicato? (em R$)");
+			System.out.println("\nQual o valor da taxa do sal·rio destinada ao sindicato? (em R$)");
 			empregados[atual].taxaFixa = entrada.nextDouble();
 		} else {
 			empregados[atual].numeroSindicato = 0;
@@ -240,15 +240,15 @@ public class FolhadePagamento {
 
 	public static void remover(Scanner entrada, Empregado[] empregados){ // Remove um empregado do sistema
 		
-		System.out.println("\nPor favor, digite o n√∫mero de cadastro do empregado a ser removido:\n");
+		System.out.println("\nPor favor, digite o n˙mero de cadastro do empregado a ser removido:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		entrada.nextLine();
 		
 		if (empregados[cadastro] == null) {
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else {
-			System.out.println("Deseja remover " + empregados[cadastro].nome + "? (Sim/N√£o)");
+			System.out.println("Deseja remover " + empregados[cadastro].nome + "? (Sim/N„o)");
 			String resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
 				empregados[20] = new Empregado();
@@ -260,16 +260,16 @@ public class FolhadePagamento {
 		
 	}
 
-	public static void ponto(Scanner entrada, Empregado[] empregados){ // Lan√ßa o cart√£o de ponto a um empregado
+	public static void ponto(Scanner entrada, Empregado[] empregados){ // LanÁa o cart„o de ponto a um empregado
 		
-		System.out.println("Digite o n√∫mero de cadastro do empregado:\n");
+		System.out.println("Digite o n˙mero de cadastro do empregado:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		
 		if (empregados[cadastro] == null) {
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else if (empregados[cadastro].tipo == 'H') {
-			System.out.println("Digite o n√∫mero de horas:");
+			System.out.println("Digite o n˙mero de horas:");
 			double horas = entrada.nextDouble();
 			backup(empregados[cadastro], empregados[20]);
 			if (horas > 8) {
@@ -277,67 +277,67 @@ public class FolhadePagamento {
 			} else {
 				empregados[cadastro].salario += (horas * empregados[cadastro].salarioHora);
 			}
-			System.out.println("Cart√£o de ponto lan√ßado com sucesso!");
+			System.out.println("Cart„o de ponto lanÁado com sucesso!");
 		} else {
-			System.out.println("Empregado n√£o √© horista!");
+			System.out.println("Empregado n„o È horista!");
 		}
 		
 	}
 	
-	public static void venda(Scanner entrada, Empregado[] empregados){ // Lan√ßa o resultado da venda de um empregado
+	public static void venda(Scanner entrada, Empregado[] empregados){ // LanÁa o resultado da venda de um empregado
 		
-		System.out.println("Digite o n√∫mero de cadastro do empregado:\n");
+		System.out.println("Digite o n˙mero de cadastro do empregado:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		
 		if(empregados[cadastro] == null){
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
 			System.out.println("Digite o resultado da venda:");
 			backup(empregados[cadastro], empregados[20]);
 			empregados[cadastro].salario += entrada.nextDouble() * (empregados[cadastro].percentual/100);
-			System.out.println("Resultado lan√ßado com sucesso!");
+			System.out.println("Resultado lanÁado com sucesso!");
 		} else {
-			System.out.println("Empregado n√£o √© comissionado!");
+			System.out.println("Empregado n„o È comissionado!");
 		}
 		
 	}
 	
-	public static void alteracoes(Scanner entrada, Empregado[] empregados) throws Exception { // Altera dados de um funcion√°rio
+	public static void alteracoes(Scanner entrada, Empregado[] empregados) throws Exception { // Altera dados de um funcion·rio
 		
-		System.out.println("Digite o n√∫mero de cadastro do empregado:\n");
+		System.out.println("Digite o n˙mero de cadastro do empregado:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		
 		if (empregados[cadastro] == null) {
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else {
 			empregados[20] = new Empregado();
 			backup(empregados[cadastro], empregados[20]);
-			System.out.println("Deseja alterar o nome do funcion√°rio: " + empregados[cadastro].nome + "? (Sim/N√£o)");
+			System.out.println("Deseja alterar o nome do funcion·rio: " + empregados[cadastro].nome + "? (Sim/N„o)");
 			entrada.nextLine();
 			String resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
-				System.out.println("Digite o nome do funcion√°rio:");
+				System.out.println("Digite o nome do funcion·rio:");
 				empregados[cadastro].nome = entrada.nextLine();
 			}
 			
-			System.out.println("Deseja alterar o endere√ßo do funcion√°rio: " + empregados[cadastro].endereco + "?  (Sim/N√£o)");
+			System.out.println("Deseja alterar o endereÁo do funcion·rio: " + empregados[cadastro].endereco + "?  (Sim/N„o)");
 			resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
-				System.out.println("Digite o endere√ßo do funcion√°rio:");
+				System.out.println("Digite o endereÁo do funcion·rio:");
 				empregados[cadastro].endereco = entrada.nextLine();
 			}
 			
-			System.out.println("Deseja alterar o tipo de pagamento do funcion√°rio: " + empregados[cadastro].tipo + "?  (Sim/N√£o)");
+			System.out.println("Deseja alterar o tipo de pagamento do funcion·rio: " + empregados[cadastro].tipo + "?  (Sim/N„o)");
 			resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
-				System.out.println("Digite o tipo de pagamento do funcion√°rio:");
+				System.out.println("Digite o tipo de pagamento do funcion·rio:");
 				System.out.println("\nH - Horista");
 				System.out.println("A - Assalariado");
 				System.out.println("C - Comissionados");
 				empregados[cadastro].tipo = (char) System.in.read();
-				System.out.print("\nPor favor, digite o sal√°rio a ser pago ao empregado ");
+				System.out.print("\nPor favor, digite o sal·rio a ser pago ao empregado ");
 				if (empregados[cadastro].tipo == 'H') {
 					System.out.println("por hora:");
 					empregados[cadastro].salarioHora = entrada.nextDouble();
@@ -347,10 +347,10 @@ public class FolhadePagamento {
 					empregados[cadastro].percentual = 0;
 					empregados[cadastro].salarioFixo = 0;
 				} else {
-					System.out.println("por m√™s:");
+					System.out.println("por mÍs:");
 					empregados[cadastro].salarioFixo = entrada.nextDouble();
 					if (empregados[cadastro].tipo == 'C') {
-						System.out.println("Por favor, digite o percentual de comiss√£o a ser pago ao empregado:");
+						System.out.println("Por favor, digite o percentual de comiss„o a ser pago ao empregado:");
 						empregados[cadastro].percentual = entrada.nextDouble();
 						empregados[cadastro].agendaDia = 4;
 						empregados[cadastro].agendaData = -1;
@@ -366,16 +366,16 @@ public class FolhadePagamento {
 				}
 			}
 			entrada.nextLine();
-			System.out.println("Deseja alterar a participa√ß√£o do funcion√°rio no sindicato: " + empregados[cadastro].sindicalista + "?  (Sim/N√£o)");
+			System.out.println("Deseja alterar a participaÁ„o do funcion·rio no sindicato: " + empregados[cadastro].sindicalista + "?  (Sim/N„o)");
 			resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
-				System.out.println("\nO funcion√°rio faz parte do sindicato?");
-				System.out.println("S - Sim ou N - N√£o");
+				System.out.println("\nO funcion·rio faz parte do sindicato?");
+				System.out.println("S - Sim ou N - N„o");
 				empregados[cadastro].sindicalista = (char) System.in.read(); 
 				if(empregados[cadastro].sindicalista == 'S'){
-					System.out.println("\nQual o n√∫mero de identifica√ß√£o do funcion√°rio no sindicato? (6 D√≠gitos)");
+					System.out.println("\nQual o n˙mero de identificaÁ„o do funcion·rio no sindicato? (6 DÌgitos)");
 					empregados[cadastro].numeroSindicato = entrada.nextLong();
-					System.out.println("\nQual o valor da taxa do sal√°rio destinada ao sindicato? (em R$)");
+					System.out.println("\nQual o valor da taxa do sal·rio destinada ao sindicato? (em R$)");
 					empregados[cadastro].taxaFixa = entrada.nextDouble();
 					entrada.nextLine(); 
 				} else {
@@ -384,32 +384,32 @@ public class FolhadePagamento {
 				}
 			}
 
-			System.out.println("Deseja alterar a forma de pagamento do funcion√°rio: " + empregados[cadastro].metodo + "?  (Sim/N√£o)");
+			System.out.println("Deseja alterar a forma de pagamento do funcion·rio: " + empregados[cadastro].metodo + "?  (Sim/N„o)");
 			resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
 				System.out.println("\nPor favor, informe a forma de pagamento desejada pelo empregado:");
-				System.out.println("Op√ß√µes: Cheque pelos correios, Dep√≥sito banc√°rio, Cheque em m√£os");
+				System.out.println("OpÁıes: Cheque pelos correios, DepÛsito banc·rio, Cheque em m„os");
 				empregados[cadastro].metodo = entrada.nextLine();
 			}
 		}
 		System.out.println("Dados alterados com sucesso!");
 	}
 
-	public static void taxa(Scanner entrada, Empregado[] empregados){ // Registra uma taxa cobrada pelo sindicato a um funcion√°rio
+	public static void taxa(Scanner entrada, Empregado[] empregados){ // Registra uma taxa cobrada pelo sindicato a um funcion·rio
 	
-		System.out.println("Digite o n√∫mero de cadastro do empregado:\n");
+		System.out.println("Digite o n˙mero de cadastro do empregado:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		
 		if(empregados[cadastro] == null){
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else if (empregados[cadastro].sindicalista == 'S'){
 			backup(empregados[cadastro], empregados[20]);
-			System.out.println("Digite a taxa a ser deduzida do pagamento do funcion√°rio:");
+			System.out.println("Digite a taxa a ser deduzida do pagamento do funcion·rio:");
 			empregados[cadastro].adicionais += entrada.nextDouble();
 			System.out.println("Taxa registrada com sucesso!");
 		} else {
-			System.out.println("Empregado n√£o faz parte do sindicato!");
+			System.out.println("Empregado n„o faz parte do sindicato!");
 		}
 		
 	}
@@ -418,12 +418,12 @@ public class FolhadePagamento {
 		
 		System.out.println("Por favor, informe o ano atual");
 		int ano = entrada.nextInt();
-		System.out.println("Por favor, informe o m√™s atual:");
+		System.out.println("Por favor, informe o mÍs atual:");
 		int mes = entrada.nextInt();
 		System.out.println("Por favor, informe a data atual:");
 		int data = entrada.nextInt();
 		System.out.println("Por favor, informe o dia da semana atual:");
-		System.out.println("1 - Segunda-feira\n2 - Ter√ßa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+		System.out.println("1 - Segunda-feira\n2 - TerÁa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
 		int dia = entrada.nextInt();
 		
 		boolean ultimo = ultimoDiaDoMes(ano, mes, data);
@@ -457,7 +457,6 @@ public class FolhadePagamento {
 				backup(empregados[20], empregados[indice]);
 			} else {
 				int indice = empregados[20].numeroCadastro - 1;
-				System.out.println(indice);
 				Empregado troca = new Empregado();
 				backup(empregados[indice], troca);
 				backup(empregados[20], empregados[indice]);
@@ -467,7 +466,6 @@ public class FolhadePagamento {
 			break;
 		case 2:
 			int indice = empregados[20].numeroCadastro - 1;
-			System.out.println(indice);
 			if (ultimo == 2){
 				empregados[indice] = null;
 			} else if (ultimo == 1){
@@ -494,51 +492,51 @@ public class FolhadePagamento {
 			System.out.println("Digite o dia de pagamento que deseja adicionar na agenda (de 1 a 28)");
 			escolha = entrada.nextInt() - 1;
 			if (agenda.data[escolha] == 1){
-				System.out.println("Agenda de pagamento j√° cadastrada!");
+				System.out.println("Agenda de pagamento j· cadastrada!");
 			} else {
 				agenda.data[escolha] = 1;
 				System.out.println("Agenda de pagamento cadastrada com sucesso!");
 			}
 		} else if (opcao == 'B'){
-			System.out.println("Digite o dia da semana em que ser√° realizado o pagamento:\n");
-			System.out.println("1 - Segunda-feira\n2 - Ter√ßa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+			System.out.println("Digite o dia da semana em que ser· realizado o pagamento:\n");
+			System.out.println("1 - Segunda-feira\n2 - TerÁa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
 			escolha = entrada.nextInt() - 1;
 			if (agenda.diaB[escolha] == 1){
-				System.out.println("Agenda de pagamento j√° cadastrada!");
+				System.out.println("Agenda de pagamento j· cadastrada!");
 			} else {
 				agenda.diaB[escolha] = 1;
 				System.out.println("Agenda de pagamento cadastrada com sucesso!");
 			}
 		} else if (opcao == 'S'){
-			System.out.println("Digite o dia da semana em que ser√° realizado o pagamento:\n");
-			System.out.println("1 - Segunda-feira\n2 - Ter√ßa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+			System.out.println("Digite o dia da semana em que ser· realizado o pagamento:\n");
+			System.out.println("1 - Segunda-feira\n2 - TerÁa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
 			escolha = entrada.nextInt() - 1;
 			if (agenda.diaS[escolha] == 1){
-				System.out.println("Agenda de pagamento j√° cadastrada!");
+				System.out.println("Agenda de pagamento j· cadastrada!");
 			} else {
 				agenda.diaS[escolha] = 1;
 				System.out.println("Agenda de pagamento cadastrada com sucesso!");
 			} 
 		} else {
-			System.out.println("Op√ß√£o inv√°lida!");
+			System.out.println("OpÁ„o inv·lida!");
 		}
 		
 	}
 	
 	public static void alterarPagamento(Scanner entrada, Agenda agenda, Empregado[] empregados) throws Exception{
 		
-		System.out.println("Por favor, digite o n√∫mero de cadastro do empregado:\n");
+		System.out.println("Por favor, digite o n˙mero de cadastro do empregado:\n");
 		imprimeFuncionarios(empregados);
 		int cadastro = entrada.nextInt() - 1;
 		if (empregados[cadastro] == null){
-			System.out.println("Empregado n√£o cadastrado!");
+			System.out.println("Empregado n„o cadastrado!");
 		} else {
-			System.out.println("Qual tipo de agenda o funcion√°rio far√° parte?");
+			System.out.println("Qual tipo de agenda o funcion·rio far· parte?");
 			System.out.println("B - Bi-semanal, S - Semanal, M - Mensal");
 			char tipo = (char) System.in.read();
 			if (tipo == 'B'){
-				System.out.println("Em qual dia da semana o funcion√°rio ser√° pago?");
-				System.out.println("1 - Segunda-feira\n2 - Ter√ßa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+				System.out.println("Em qual dia da semana o funcion·rio ser· pago?");
+				System.out.println("1 - Segunda-feira\n2 - TerÁa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
 				int escolha = entrada.nextInt() - 1;
 				if(agenda.diaB[escolha] == 1){
 					empregados[cadastro].agendaDia = escolha;
@@ -546,11 +544,11 @@ public class FolhadePagamento {
 					empregados[cadastro].agendaData = -1;
 					System.out.println("Alterado com sucesso!");
 				} else {
-					System.out.println("Agenda de pagamento escolhida n√£o est√° dispon√≠vel!");
+					System.out.println("Agenda de pagamento escolhida n„o est· disponÌvel!");
 				}
 			} else if (tipo == 'S') {
-				System.out.println("Em qual dia da semana o funcion√°rio ser√° pago?");
-				System.out.println("1 - Segunda-feira\n2 - Ter√ßa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
+				System.out.println("Em qual dia da semana o funcion·rio ser· pago?");
+				System.out.println("1 - Segunda-feira\n2 - TerÁa-feira\n3 - Quarta-feira\n4 - Quinta-feira\n5 - Sexta-feira");
 				int escolha = entrada.nextInt() - 1;
 				if (agenda.diaS[escolha] == 1){
 					empregados[cadastro].agendaDia = escolha;
@@ -558,10 +556,10 @@ public class FolhadePagamento {
 					empregados[cadastro].agendaData = -1;
 					System.out.println("Alterado com sucesso!");
 				} else {
-					System.out.println("Agenda de pagamento escolhida n√£o est√° dispon√≠vel!");
+					System.out.println("Agenda de pagamento escolhida n„o est· disponÌvel!");
 				}
 			} else if (tipo == 'M') {
-				System.out.println("Em qual dia do m√™s o funcion√°rio ser√° pago (De 1 a 28)?");
+				System.out.println("Em qual dia do mÍs o funcion·rio ser· pago (De 1 a 28)?");
 				int escolha = entrada.nextInt() - 1;
 				if (agenda.data[escolha] == 1){
 					empregados[cadastro].agendaData = escolha;
@@ -569,7 +567,7 @@ public class FolhadePagamento {
 					empregados[cadastro].agendaDia = -1;
 					System.out.println("Alterado com sucesso!");
 				} else {
-					System.out.println("Agenda de pagamento escolhida n√£o est√° dispon√≠vel!");
+					System.out.println("Agenda de pagamento escolhida n„o est· disponÌvel!");
 				}
 			}
 		}
@@ -646,13 +644,13 @@ public class FolhadePagamento {
 			case 11:
 				imprimeFuncionarios(empregados);
 				break;
-					
+				
 			case 0:
 				System.out.println("Obrigado por utilizar a  Wolves & Villagers Sistema de Cadastros!");
 				break;
 				
 			default:
-				System.out.println("Op√ß√£o Inv√°lida!");
+				System.out.println("OpÁ„o Inv·lida!");
 				break;
 				
 			}
