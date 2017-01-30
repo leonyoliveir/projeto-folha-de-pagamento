@@ -58,6 +58,27 @@ public class FolhadePagamento {
 		}
 	}
 	
+	public static void backup (Empregado atual, Empregado recup){
+		
+		recup.nome = atual.nome;
+		recup.endereco = atual.endereco;
+		recup.metodo = atual.metodo;
+		recup.salarioFixo = atual.salarioFixo;
+		recup.numeroCadastro = atual.numeroCadastro;
+		recup.salarioHora = atual.salarioHora;
+		recup.adicionais = atual.adicionais;
+		recup.agendaData = atual.agendaData;
+		recup.agendaTipo = atual.agendaTipo;
+		recup.sindicalista = atual.sindicalista;
+		recup.numeroSindicato = atual.numeroSindicato;
+		recup.percentual = atual.percentual;
+		recup.salario = atual.salario;
+		recup.tipo = atual.tipo;
+		recup.agendaDia = atual.agendaDia;
+		recup.taxaFixa = atual.taxaFixa;
+		
+	}
+	
 	public static void cadastrado(Empregado empregado) { // Imprime na tela os dados do empregado cadastrado
 		
 		System.out.println("\nFuncionário cadastrado com sucesso!");
@@ -110,9 +131,10 @@ public class FolhadePagamento {
 		for (int i = 0; i < 20; i++){
 			
 			if (empregados[i] != null && empregados[i].agendaTipo == 'M' && empregados[i].agendaData == data){
-				empregados[i].salario = empregados[i].salarioFixo - (empregados[i].taxaFixa + empregados[i].adicionais);
+				empregados[i].salario += empregados[i].salarioFixo - (empregados[i].taxaFixa + empregados[i].adicionais);
 				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
+				empregados[i].adicionais = 0;
 			}
 		}
 	}
@@ -124,6 +146,7 @@ public class FolhadePagamento {
 				empregados[i].salario += (empregados[i].salarioFixo/4) - (empregados[i].taxaFixa + empregados[i].adicionais)/4;
 				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
+				empregados[i].adicionais = 0;
 			}
 		}
 	}
@@ -135,6 +158,7 @@ public class FolhadePagamento {
 				empregados[i].salario += (empregados[i].salarioFixo/2) - (empregados[i].adicionais + empregados[i].taxaFixa)/2;
 				System.out.printf("O funcionário %s receberá R$ %.2f no método: %s\n", empregados[i].nome, empregados[i].salario, empregados[i].metodo);
 				empregados[i].salario = 0;
+				empregados[i].adicionais = 0;
 			}
 		}
 	}
@@ -227,7 +251,8 @@ public class FolhadePagamento {
 			System.out.println("Deseja remover " + empregados[cadastro].nome + "? (Sim/Não)");
 			String resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
-				empregados[20] = empregados[cadastro];
+				empregados[20] = new Empregado();
+				backup(empregados[cadastro], empregados[20]);
 				empregados[cadastro] = null;
 				System.out.println("Empregado removido com sucesso!");
 			}
@@ -246,7 +271,7 @@ public class FolhadePagamento {
 		} else if (empregados[cadastro].tipo == 'H') {
 			System.out.println("Digite o número de horas:");
 			double horas = entrada.nextDouble();
-			empregados[20] = empregados[cadastro];
+			backup(empregados[cadastro], empregados[20]);
 			if (horas > 8) {
 				empregados[cadastro].salario += (((horas - 8) * empregados[cadastro].salarioHora * 1.5) + (8 * empregados[cadastro].salarioHora));
 			} else {
@@ -269,7 +294,7 @@ public class FolhadePagamento {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
 			System.out.println("Digite o resultado da venda:");
-			empregados[20] = empregados[cadastro];
+			backup(empregados[cadastro], empregados[20]);
 			empregados[cadastro].salario += entrada.nextDouble() * (empregados[cadastro].percentual/100);
 			System.out.println("Resultado lançado com sucesso!");
 		} else {
@@ -287,7 +312,8 @@ public class FolhadePagamento {
 		if (empregados[cadastro] == null) {
 			System.out.println("Empregado não cadastrado!");
 		} else {
-			empregados[20] = empregados[cadastro];
+			empregados[20] = new Empregado();
+			backup(empregados[cadastro], empregados[20]);
 			System.out.println("Deseja alterar o nome do funcionário: " + empregados[cadastro].nome + "? (Sim/Não)");
 			entrada.nextLine();
 			String resposta = entrada.nextLine();
@@ -315,16 +341,31 @@ public class FolhadePagamento {
 				if (empregados[cadastro].tipo == 'H') {
 					System.out.println("por hora:");
 					empregados[cadastro].salarioHora = entrada.nextDouble();
+					empregados[cadastro].agendaDia = 4;
+					empregados[cadastro].agendaData = -1;
+					empregados[cadastro].agendaTipo = 'S';
+					empregados[cadastro].percentual = 0;
+					empregados[cadastro].salarioFixo = 0;
 				} else {
 					System.out.println("por mês:");
 					empregados[cadastro].salarioFixo = entrada.nextDouble();
 					if (empregados[cadastro].tipo == 'C') {
 						System.out.println("Por favor, digite o percentual de comissão a ser pago ao empregado:");
 						empregados[cadastro].percentual = entrada.nextDouble();
+						empregados[cadastro].agendaDia = 4;
+						empregados[cadastro].agendaData = -1;
+						empregados[cadastro].agendaTipo = 'B';
+						empregados[cadastro].salarioHora = 0;
+					} else {
+						empregados[cadastro].percentual = 0;
+						empregados[cadastro].agendaDia = -1;
+						empregados[cadastro].agendaData = 27;
+						empregados[cadastro].agendaTipo = 'M';
+						empregados[cadastro].salarioHora = 0;
 					}
 				}
 			}
-			
+			entrada.nextLine();
 			System.out.println("Deseja alterar a participação do funcionário no sindicato: " + empregados[cadastro].sindicalista + "?  (Sim/Não)");
 			resposta = entrada.nextLine();
 			if (resposta.equals("Sim")) {
@@ -337,6 +378,9 @@ public class FolhadePagamento {
 					System.out.println("\nQual o valor da taxa do salário destinada ao sindicato? (em R$)");
 					empregados[cadastro].taxaFixa = entrada.nextDouble();
 					entrada.nextLine(); 
+				} else {
+					empregados[cadastro].taxaFixa = 0;
+					empregados[cadastro].numeroSindicato = 0;
 				}
 			}
 
@@ -360,6 +404,7 @@ public class FolhadePagamento {
 		if(empregados[cadastro] == null){
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro].sindicalista == 'S'){
+			backup(empregados[cadastro], empregados[20]);
 			System.out.println("Digite a taxa a ser deduzida do pagamento do funcionário:");
 			empregados[cadastro].adicionais += entrada.nextDouble();
 			System.out.println("Taxa registrada com sucesso!");
@@ -402,26 +447,38 @@ public class FolhadePagamento {
 		switch(opcao){
 		case 1:
 			if(ultimo == 1){
-				empregados[20] = empregados[ultimoAdd];
+				empregados[20] = new Empregado();
+				backup(empregados[ultimoAdd], empregados[20]);
 				empregados[ultimoAdd] = null;
 				System.out.println("Undo realizado com sucesso!");
-			}
-			else{
+			} else if (ultimo == 2){
 				int indice = empregados[20].numeroCadastro - 1;
+				empregados[indice] = new Empregado();
+				backup(empregados[20], empregados[indice]);
+			} else {
+				int indice = empregados[20].numeroCadastro - 1;
+				System.out.println(indice);
 				Empregado troca = new Empregado();
-				troca = empregados[indice];
-				empregados[indice] = empregados[20];
-				empregados[20] = troca;
+				backup(empregados[indice], troca);
+				backup(empregados[20], empregados[indice]);
+				backup(troca, empregados[20]);
 				System.out.println("Undo realizado com sucesso!");
 			}
 			break;
 		case 2:
 			int indice = empregados[20].numeroCadastro - 1;
-			Empregado troca = new Empregado();
-			troca = empregados[indice];
-			empregados[indice] = empregados[20];
-			empregados[20] = troca;
-			System.out.println("Redo realizado com sucesso!");
+			System.out.println(indice);
+			if (ultimo == 2){
+				empregados[indice] = null;
+			} else if (ultimo == 1){
+				empregados[indice] = new Empregado();
+				backup(empregados[20], empregados[indice]);
+			} else {
+				Empregado troca = new Empregado();
+				backup(empregados[indice], troca);
+				backup(empregados[20], empregados[indice]);
+				System.out.println("Redo realizado com sucesso!");
+			}
 			break;
 		}
 	}
@@ -522,6 +579,7 @@ public class FolhadePagamento {
 
 		Scanner entrada = new Scanner(System.in);
 		Empregado[] empregados = new Empregado[21];
+		empregados[20] = new Empregado();
 		Agenda agenda = new Agenda();
 		int opcao;
 		int ultimo = 0, ultimoAdd = -1;
@@ -587,7 +645,6 @@ public class FolhadePagamento {
 				
 			case 11:
 				imprimeFuncionarios(empregados);
-				break;
 				
 			case 0:
 				System.out.println("Obrigado por utilizar a  Wolves & Villagers Sistema de Cadastros!");
