@@ -271,6 +271,7 @@ public class FolhadePagamento {
 		} else if (empregados[cadastro].tipo == 'H') {
 			System.out.println("Digite o número de horas:");
 			double horas = entrada.nextDouble();
+			empregados[20] = new Empregado();
 			backup(empregados[cadastro], empregados[20]);
 			if (horas > 8) {
 				empregados[cadastro].salario += (((horas - 8) * empregados[cadastro].salarioHora * 1.5) + (8 * empregados[cadastro].salarioHora));
@@ -294,6 +295,7 @@ public class FolhadePagamento {
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro] != null && empregados[cadastro].tipo == 'C') {
 			System.out.println("Digite o resultado da venda:");
+			empregados[20] = new Empregado();
 			backup(empregados[cadastro], empregados[20]);
 			empregados[cadastro].salario += entrada.nextDouble() * (empregados[cadastro].percentual/100);
 			System.out.println("Resultado lançado com sucesso!");
@@ -404,6 +406,7 @@ public class FolhadePagamento {
 		if(empregados[cadastro] == null){
 			System.out.println("Empregado não cadastrado!");
 		} else if (empregados[cadastro].sindicalista == 'S'){
+			empregados[20] = new Empregado();
 			backup(empregados[cadastro], empregados[20]);
 			System.out.println("Digite a taxa a ser deduzida do pagamento do funcionário:");
 			empregados[cadastro].adicionais += entrada.nextDouble();
@@ -444,6 +447,10 @@ public class FolhadePagamento {
 	public static void undoRedo(Scanner entrada, Empregado[] empregados, int ultimo, int ultimoAdd){
 		System.out.println("O que deseja fazer?\n1 - Undo\n2 - Redo");
 		int opcao = entrada.nextInt();
+		if (ultimo == 0){
+			System.out.println("Nenhuma operação realizada até o momento!");
+			return;
+		}
 		switch(opcao){
 		case 1:
 			if(ultimo == 1){
@@ -455,6 +462,7 @@ public class FolhadePagamento {
 				int indice = empregados[20].numeroCadastro - 1;
 				empregados[indice] = new Empregado();
 				backup(empregados[20], empregados[indice]);
+				System.out.println("Undo realizado com sucesso!");
 			} else {
 				int indice = empregados[20].numeroCadastro - 1;
 				Empregado troca = new Empregado();
